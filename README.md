@@ -1,4 +1,3 @@
-# Pishgaman Asia
-## Front-end Developer exam
+# Pishgaman Asia Exam
 
-See [Demo](https://example.vercel.app).
+See [Demo](https://pishgaman-asia.vercel.app).
