@@ -1,0 +1,57 @@
+$container-bg-color: #000000;
+$modal-bg-color: #FCFCFF;
+$success-text: #6ecd37;
+$error-text: #ec312b;
+$alpha: 0.6;
+
+
+.modal-container{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    padding: 20px;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba($container-bg-color, $alpha);
+    z-index: 50;
+
+    .modal{
+        background-color: $modal-bg-color;
+        width: 100%;
+        max-width: 310px;
+        border-radius: 2rem;
+        box-shadow: 2px 3px 15px solid black;
+        padding: 20px 15px;
+
+        .title{
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        .subtext{
+            text-align: center;
+            margin-top: 8px;
+        }
+
+        .image{
+            width: 100%;
+            height: auto;
+            margin-top: -4px;
+        }
+
+    
+
+        .success-text{
+            color: $success-text;
+        }
+        .error-text{
+            color: $error-text;
+        }
+    }
+}

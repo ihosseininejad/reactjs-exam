@@ -4,6 +4,6 @@ type Props = {}
 
 export default function MapPage({}: Props) {
   return (
-    <div>MapPage</div>
+    <div></div>
   )
 }

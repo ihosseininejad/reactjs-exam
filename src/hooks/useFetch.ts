@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 
 const HEADER_BASE: AxiosRequestConfig['headers'] = {
     "content-type": "application/json",
@@ -7,11 +7,17 @@ const HEADER_BASE: AxiosRequestConfig['headers'] = {
     "Accept": "application/json",
 };
 
+export interface MyResponse {
+    data: any;
+    status: number;
+    message: string;
+}
+
 type Method = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PUT' | 'PATCH';
 
-type UseFetchResult<Data> = [Data | null, boolean, Error | null, () => Promise<void>];
+type UseFetchResult<MyResponse> = [MyResponse | null, boolean, Error | null, () => Promise<void>];
 
-const useFetch = <Data>(
+const useFetch = <MyResponse>(
     method: Method,
     { url, values, header, autoFetch }: { 
         url: string; 
@@ -19,10 +25,10 @@ const useFetch = <Data>(
         header?: AxiosRequestConfig['headers']; 
         autoFetch?: boolean
     }
-): UseFetchResult<Data> => {
+): UseFetchResult<MyResponse> => {
     const base = (!header) ? HEADER_BASE : header;
-    const [data, setData] = useState<Data | null>(null);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [response, setResponse] = useState<MyResponse | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<Error | null>(null);
 
     const options: AxiosRequestConfig = {
@@ -38,9 +44,7 @@ const useFetch = <Data>(
         setIsLoading(true);
         try {
             const response = await axios(options);
-            const str = JSON.stringify(response.data);
-            const responseData = JSON.parse(str) as Data;
-            setData(responseData);
+            setResponse(response.data);
         } catch (err: any) {
             setError(err);
         } finally {
@@ -61,7 +65,7 @@ const useFetch = <Data>(
         };
     }, [url]);
 
-    return [data, isLoading, error, handlerApi];
+    return [response, isLoading, error, handlerApi];
 };
 
 export default useFetch;

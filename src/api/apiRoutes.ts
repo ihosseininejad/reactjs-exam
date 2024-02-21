@@ -2,7 +2,7 @@ export const BASE_URL = "https://exam.pishgamanasia.com"
 export const MAP_BASE_URL = "https://map.pishgamanasia.com"
 
 // Authentication
-export const AUTH_ROUTE = `${BASE_URL}/register`
+export const AUTH_ROUTE = `${BASE_URL}/webapi/Account/Login`
 
 // Map Section
 export const SEARCH_VEHICLE = (searchTerm: string, userToken: string) => `${BASE_URL}/webapi/Request/GetVehicleUsers?SearchTerm=${searchTerm}&UserToken=${userToken}`;

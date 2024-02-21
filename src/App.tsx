@@ -5,6 +5,8 @@ import PrivateRoute from "./components/routes/PrivateRoute";
 import AuthPage from "./pages/AuthPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import MapPage from "./pages/MapPage";
+import { ToastProvider } from "./context/ToastContext";
+import Layout from "./components/common/Layout";
 
 function App() {
 
@@ -15,7 +17,11 @@ function App() {
   ]);
 
   return (
-    <RouterProvider router={router} />
+    <ToastProvider>
+      <Layout>
+        <RouterProvider router={router} />
+      </Layout>
+    </ToastProvider>
   );
 }
 

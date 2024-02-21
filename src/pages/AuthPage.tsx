@@ -1,11 +1,32 @@
-import React from 'react'
+import { useEffect } from 'react'
+import AuthForm from '../components/AuthForm'
+import '../styles/auth/auth-page.scss'
+import useToken from '../hooks/useToken'
+import { useNavigate } from 'react-router-dom'
 
-type Props = {}
+export default function AuthPage() {
+  const token = useToken()
+  const navigate = useNavigate()
 
-export default function AuthPage({}: Props) {
-
+  useEffect(() => {
+    if (token) {
+      navigate('/')
+    }
+  }, [])
 
   return (
-    <div>AuthPage</div>
+    <div className="container">
+      <div className="screen">
+        <div className="content">
+          <AuthForm />
+        </div>
+        <div className="background">
+          <span className="background-shape shape4"></span>
+          <span className="background-shape shape3"></span>
+          <span className="background-shape shape2"></span>
+          <span className="background-shape shape1"></span>
+        </div>
+      </div>
+    </div>
   )
 }
