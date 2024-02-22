@@ -1,13 +1,14 @@
 import { useContext, useEffect, useState, FormEvent } from 'react'
-import Button from './form/Button'
-import { Input } from './form/Input'
+import Button from '../form/Button'
+import { Input } from '../form/Input'
 
-import { AUTH_ROUTE } from '../api/apiRoutes'
-import useFetch, { MyResponse } from '../hooks/useFetch'
-import CookieHandler from '../utils/CookieHandler'
+import { AUTH_ROUTE } from '../../api/apiRoutes'
+import useFetch from '../../hooks/useFetch'
+import CookieHandler from '../../utils/CookieHandler'
 
-import { ToastContext, ToastContextType } from '../context/ToastContext'
+import { ToastContext, ToastContextType } from '../../context/ToastContext'
 import { useNavigate } from 'react-router-dom'
+import { IApiResponse } from '../../types/types'
 
 export default function AuthForm() {
     const [username, setUsername] = useState<string>('')
@@ -15,7 +16,7 @@ export default function AuthForm() {
     const { showToast } = useContext(ToastContext) as ToastContextType
     const navigate = useNavigate()
 
-    const [response, isLoading, error, handlerApi] = useFetch<MyResponse>("POST", {
+    const [response, isLoading, error, handlerApi] = useFetch<IApiResponse>("POST", {
         url: AUTH_ROUTE,
         values: {
             username,

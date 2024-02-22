@@ -1,7 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
 import PrivateRoute from "./components/routes/PrivateRoute";
-
 import AuthPage from "./pages/AuthPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import MapPage from "./pages/MapPage";

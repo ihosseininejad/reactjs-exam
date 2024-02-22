@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios, { AxiosRequestConfig } from 'axios';
+import { IApiResponse } from '../types/types';
 
 const HEADER_BASE: AxiosRequestConfig['headers'] = {
     "content-type": "application/json",
@@ -7,17 +8,12 @@ const HEADER_BASE: AxiosRequestConfig['headers'] = {
     "Accept": "application/json",
 };
 
-export interface MyResponse {
-    data: any;
-    status: number;
-    message: string;
-}
 
 type Method = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PUT' | 'PATCH';
 
-type UseFetchResult<MyResponse> = [MyResponse | null, boolean, Error | null, () => Promise<void>];
+type UseFetchResult<IApiResponse> = [IApiResponse | null, boolean, Error | null, () => Promise<void>];
 
-const useFetch = <MyResponse>(
+const useFetch = <IApiResponse>(
     method: Method,
     { url, values, header, autoFetch }: { 
         url: string; 
@@ -25,9 +21,9 @@ const useFetch = <MyResponse>(
         header?: AxiosRequestConfig['headers']; 
         autoFetch?: boolean
     }
-): UseFetchResult<MyResponse> => {
+): UseFetchResult<IApiResponse> => {
     const base = (!header) ? HEADER_BASE : header;
-    const [response, setResponse] = useState<MyResponse | null>(null);
+    const [response, setResponse] = useState<IApiResponse | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<Error | null>(null);
 

@@ -1,4 +1,4 @@
-import '../../styles/common/modal-container.scss'
+import '../../styles/modal-container.scss'
 
 interface ToastModalProps {
     type: string;
@@ -8,6 +8,7 @@ interface ToastModalProps {
 
 const ToastModal: React.FC<ToastModalProps> = ({ type, title, message }) => {
     return (
+        <>
         <div className='modal-container'>
             <div className='modal'>
                 <img className='image' src={type == "success" ? "/assets/images/modal/success-loader.gif" : "/assets/images/modal/crossmark.gif"} alt="" height={450} width={450} />
@@ -19,6 +20,7 @@ const ToastModal: React.FC<ToastModalProps> = ({ type, title, message }) => {
                 </p>
             </div>
         </div>
+        </>
     );
 }
 

@@ -1,8 +1,9 @@
 import { useEffect } from 'react'
-import AuthForm from '../components/AuthForm'
-import '../styles/auth/auth-page.scss'
+import AuthForm from '../components/auth/AuthForm'
 import useToken from '../hooks/useToken'
 import { useNavigate } from 'react-router-dom'
+import BackgroundLayers from '../components/auth/BackgroundLayers'
+import '../styles/auth-page.scss'
 
 export default function AuthPage() {
   const token = useToken()
@@ -20,12 +21,7 @@ export default function AuthPage() {
         <div className="content">
           <AuthForm />
         </div>
-        <div className="background">
-          <span className="background-shape shape4"></span>
-          <span className="background-shape shape3"></span>
-          <span className="background-shape shape2"></span>
-          <span className="background-shape shape1"></span>
-        </div>
+        <BackgroundLayers />
       </div>
     </div>
   )

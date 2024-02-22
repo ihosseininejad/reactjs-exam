@@ -18,7 +18,7 @@ $alpha: 0.6;
     left: 50%;
     transform: translateX(-50%);
     background-color: rgba($container-bg-color, $alpha);
-    z-index: 50;
+    z-index: 1100;
 
     .modal{
         background-color: $modal-bg-color;

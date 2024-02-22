@@ -5,18 +5,14 @@ interface InputProps extends HTMLProps<HTMLInputElement> {
     state: any;
     setState: React.Dispatch<React.SetStateAction<any>>;
     label?: string;
-    icon?: React.ElementType<{ size: number; color: string }>;
-    iconColor?: string;
-    iconSize?: number;
     required: boolean;
     minLength?: number;
     maxLength?: number
 }
 
-const Input = forwardRef<HTMLInputElement, InputProps>(({ state, setState, className, type, label, required, minLength, maxLength, icon: Icon, iconColor, iconSize, ...props }, ref) => {
+const Input = forwardRef<HTMLInputElement, InputProps>(({ state, setState, className, type, label, required, minLength, maxLength, ...props }, ref) => {
     const [error, setError] = useState<string>('')
     const [isValid, setIsValid] = useState<boolean>(false)  
-
 
     useDidMountEffect(() => {
         if(!isValid){
@@ -40,6 +36,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({ state, setState, class
 
         setState(e.target?.value)
     }
+
     return (
         <>
             {
@@ -47,7 +44,6 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({ state, setState, class
                 <label htmlFor={label} className="label">{label}</label>
             }
             <div className="field">
-                {Icon && <Icon size={iconSize!} color={iconColor!} />}
                 <input
                     name={label}
                     type={type}
@@ -64,4 +60,3 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({ state, setState, class
 Input.displayName = "Input";
 
 export { Input };
-
