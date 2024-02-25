@@ -1,7 +1,9 @@
-import CookieHandler from "../utils/CookieHandler";
+import cookieHandler from "../utils/cookieHandler";
 
-const useToken = (): string | null => {
-  return CookieHandler.get('token');
+type Token = string | null;
+
+const useToken = (): Token => {
+  return cookieHandler.get('token');
 };
 
 export default useToken;

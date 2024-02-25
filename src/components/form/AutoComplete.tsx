@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../../styles/option-box.scss'
+import '../../styles/components/form/auto-complete.scss'
 
 type Props = {
   searchTerm: string,
@@ -15,12 +15,13 @@ type Option = {
   name: string;
 };
 
-const Autocomplete: React.FC<Props> = ({ searchTerm, setSearchTerm, options, vehicle, setVehicle, loading }) => {
+const AutoComplete: React.FC<Props> = ({ searchTerm, setSearchTerm, options, vehicle, setVehicle, loading }) => {
   const [showOptions, setShowOptions] = useState<boolean>(false);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
-    if (event.target.value.length > 0) {
+    if (event.target.value.length > 1) {
+      
       setShowOptions(true);
     } else {
       setShowOptions(false);
@@ -55,12 +56,13 @@ const Autocomplete: React.FC<Props> = ({ searchTerm, setSearchTerm, options, veh
         type="text"
         value={searchTerm}
         onChange={handleChange}
-        placeholder="نوع وسیله نقلیه"
+        placeholder="جستجو نوع وسیله نقلیه"
         onBlur={handleInputBlur}
       />
       {showOptions && (
         <ul className='option-container'>
           {loading ? <li className='loading-text'>در حال دریافت...</li> :
+          !options?.length ? <li className='loading-text'>موردی یافت نشد!</li> :
             options.map((option: Option) => (
               <li key={option.id} className='option' onMouseDown={() => handleSelectOption(option)}>
                 {option.name}
@@ -72,4 +74,4 @@ const Autocomplete: React.FC<Props> = ({ searchTerm, setSearchTerm, options, veh
   );
 };
 
-export default Autocomplete;
+export default AutoComplete;

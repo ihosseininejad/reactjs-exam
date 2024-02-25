@@ -1,5 +1,5 @@
-export const splitLatLng = (latlng: any) => {
-    return `${latlng[0]}, ${latlng[1]}`;
+export const splitCoordinates = (coordinates: any) => {
+    return `${coordinates[0]}, ${coordinates[1]}`;
 };
 
 export const isZeroZero = (value: any): boolean => {

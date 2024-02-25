@@ -1,11 +1,10 @@
-$container-bg-color: #000000;
+$container-bg-color: #151515;
 $modal-bg-color: #FCFCFF;
 $success-text: #6ecd37;
 $error-text: #ec312b;
 $alpha: 0.6;
 
-
-.modal-container{
+.modal-container {
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -18,9 +17,9 @@ $alpha: 0.6;
     left: 50%;
     transform: translateX(-50%);
     background-color: rgba($container-bg-color, $alpha);
-    z-index: 1100;
+    z-index: 1000;
 
-    .modal{
+    .modal {
         background-color: $modal-bg-color;
         width: 100%;
         max-width: 310px;
@@ -28,29 +27,29 @@ $alpha: 0.6;
         box-shadow: 2px 3px 15px solid black;
         padding: 20px 15px;
 
-        .title{
+        .title {
             font-size: 2rem;
             font-weight: bold;
             margin-bottom: 8px;
             text-align: center;
         }
-        .subtext{
+
+        .subtext {
             text-align: center;
             margin-top: 8px;
         }
 
-        .image{
+        .image {
             width: 100%;
             height: auto;
             margin-top: -4px;
         }
 
-    
-
-        .success-text{
+        .success-text {
             color: $success-text;
         }
-        .error-text{
+
+        .error-text {
             color: $error-text;
         }
     }

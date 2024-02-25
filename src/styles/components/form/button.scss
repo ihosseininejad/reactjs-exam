@@ -1,0 +1,72 @@
+@import '../../variables';
+
+// ----------------------------------------------- Outlined variant
+
+.outlined {
+    background: #fff;
+    font-size: 14px;
+    margin-top: 30px;
+    padding: 12px 20px;
+    border-radius: 26px;
+    border: 1px solid #D4D3E8;
+    text-transform: uppercase;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    color: $primary-color;
+    box-shadow: 0px 2px 2px #5C5696;
+    cursor: pointer;
+    transition: .2s;
+
+    &:active,
+    &:focus,
+    &:hover {
+        outline: none;
+        border-bottom-color: $primary-transparent;
+    }
+}
+
+
+// ----------------------------------------------- Filled variant
+
+.filled {
+    background: $primary-color;
+    color: white;
+    font-size: 18px;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #D4D3E8;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    box-shadow: 0px 2px 2px $primary-transparent;
+    cursor: pointer;
+    transition: .2s;
+
+    &:active,
+    &:focus,
+    &:hover {
+        outline: none;
+        border-bottom-color: $primary-transparent;
+        opacity: 0.9;
+    }
+}
+
+// ----------------------------------------------- Desiabled style
+
+.disabled {
+    color: rgb(101, 101, 101);
+    opacity: 0.9;
+    background-color: #cecece;
+    box-shadow: none;
+    padding: 12px 20px;
+    border: none;
+
+    &:hover {
+        cursor: not-allowed;
+        pointer-events: all !important;
+    }
+}

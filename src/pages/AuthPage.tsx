@@ -1,9 +1,12 @@
 import { useEffect } from 'react'
-import AuthForm from '../components/auth/AuthForm'
 import useToken from '../hooks/useToken'
 import { useNavigate } from 'react-router-dom'
+
+import AuthForm from '../components/auth/AuthForm'
 import BackgroundLayers from '../components/auth/BackgroundLayers'
-import '../styles/auth-page.scss'
+import Waves from '../components/auth/Waves'
+import '../styles/pages/auth.scss'
+
 
 export default function AuthPage() {
   const token = useToken()
@@ -16,13 +19,16 @@ export default function AuthPage() {
   }, [])
 
   return (
-    <div className="container">
-      <div className="screen">
-        <div className="content">
-          <AuthForm />
+    <>
+      <div className="container">
+        <div className="screen">
+          <div className="content">
+            <AuthForm />
+          </div>
+          <BackgroundLayers />
         </div>
-        <BackgroundLayers />
       </div>
-    </div>
+      <Waves />
+    </>
   )
 }

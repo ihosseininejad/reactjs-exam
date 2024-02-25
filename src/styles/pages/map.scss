@@ -1,0 +1,17 @@
+.map-container {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .leaflet-marker-pane img {
+        margin-top: -22px !important;
+    }
+
+    .leaflet-bar a{
+        background-color: #ffffff68;
+        backdrop-filter: blur(20px);
+    }
+}

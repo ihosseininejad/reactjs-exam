@@ -1,0 +1,34 @@
+.label {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.field {
+    padding: 0px 0px 20px 0px;
+    position: relative;
+}
+
+.input {
+    border: none;
+    border-bottom: 2px solid #D1D1D4;
+    background: none;
+    padding: 10px;
+    padding-left: 24px;
+    font-weight: 700;
+    width: 75%;
+    transition: .2s;
+
+    &:active,
+    &:focus,
+    &:hover {
+        outline: none;
+        border-bottom-color: #6A679E;
+    }
+}
+
+.error {
+    color: #cd3131;
+    font-size: 0.9rem;
+    margin-top: -10px;
+    padding-bottom: 1rem;
+}

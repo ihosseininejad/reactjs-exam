@@ -1,0 +1,19 @@
+@import 'variables';
+
+@mixin media($device) {
+    @if $device =='tablet' {
+        @media screen and (max-width: $tablet-size) {
+            @content;
+        }
+    }
+
+    @else if $device =='mobile' {
+        @media screen and (max-width: $mobile-size) {
+            @content;
+        }
+    }
+
+    @else {
+        @warn "Invalid Device Type!";
+    }
+}

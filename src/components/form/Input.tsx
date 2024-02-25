@@ -1,5 +1,6 @@
 import { forwardRef, HTMLProps, useState } from "react";
 import useDidMountEffect from "../../hooks/useDidmountEffect";
+import '../../styles/components/form/input.scss'
 
 interface InputProps extends HTMLProps<HTMLInputElement> {
     state: any;
@@ -21,7 +22,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({ state, setState, class
             if (required && state.length <= 0) {
                 setIsValid(false)
                 setError(`${label} ضروری میباشد!`)
-            } else if(minLength && state.length <= minLength){
+            } else if(minLength && state.length < minLength){
                 setIsValid(false)
                 setError(`${label} باید حداقل ${minLength} باشد!`)
             } else {
@@ -32,7 +33,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({ state, setState, class
     }, [state]);
 
     const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if(maxLength && state.length >= maxLength) return;
+        if(maxLength && state.length > maxLength) return;
 
         setState(e.target?.value)
     }

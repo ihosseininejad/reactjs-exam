@@ -5,6 +5,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 import MapPage from "./pages/MapPage";
 import { ToastProvider } from "./context/ToastContext";
 import Layout from "./components/common/Layout";
+import './styles/main.scss'
 
 function App() {
 

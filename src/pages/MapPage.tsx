@@ -6,9 +6,9 @@ import { ACCEPT_REQUEST_ROUTE, SEARCH_VEHICLE } from '../api/apiRoutes'
 import useToken from '../hooks/useToken'
 import { ToastContext, ToastContextType } from '../context/ToastContext'
 import { IApiResponse, Option } from '../types/types'
-import '../styles/map-page.scss'
+import '../styles/pages/map.scss'
 import ActionBox from '../components/map/ActionBox'
-import { splitLatLng } from '../utils/helperFunctions'
+import { splitCoordinates } from '../utils/helperFunctions'
 
 export default function MapPage() {
   const [source, setSource] = useState<LatLngExpression>([0, 0])
@@ -29,8 +29,8 @@ export default function MapPage() {
     values: {
       userToken,
       vehicleUserTypeId: vehicle,
-      source: splitLatLng(source),
-      destination: splitLatLng(destination)
+      source: splitCoordinates(source),
+      destination: splitCoordinates(destination)
     }
   })
 
@@ -40,7 +40,9 @@ export default function MapPage() {
   })
 
   useEffect(() => {
-    setUrlState(SEARCH_VEHICLE(searchTerm, userToken))
+    if(searchTerm.length > 1){
+      setUrlState(SEARCH_VEHICLE(searchTerm, userToken))
+    }
   }, [searchTerm])
 
   useEffect(() => {
@@ -49,21 +51,21 @@ export default function MapPage() {
         setOptions(vehicleResponse.data)
       }
     } else if (!isLoading && error) {
-      showToast('error', 'میدونی چرا؟', "مشکلی از سمت سرور پیش آمده است!");
+      showToast({type: 'error', title: 'برای اینکه!', message: "مشکلی از سمت سرور پیش آمده است!"});
     }
   }, [vehicleIsLoading])
 
   useEffect(() => {
     if (!isLoading && response) {
       if (response.status) {
-        showToast('success', 'یه خبر خوب!', response.message);
+        showToast({type: 'success', title: 'یه خبر خوب!', message: response.message + ` (${response.data?.requestNo})`});
         clearForm()
       } else {
-        showToast('error', 'میدونی چرا؟', response.message || "مشکلی از سمت سرور پیش آمده است!");
+        showToast({type: 'error', title: 'برای اینکه!', message: response.message || "مشکلی از سمت سرور پیش آمده است!"});
         clearForm()
       }
     } else if (!isLoading && error) {
-      showToast('error', 'میدونی چرا؟', "مشکلی از سمت سرور پیش آمده است!");
+      showToast({type: 'error', title: 'برای اینکه!', message: "مشکلی از سمت سرور پیش آمده است!"});
     }
   }, [isLoading])
 
@@ -86,6 +88,8 @@ export default function MapPage() {
 
       case 2:
         handlerApi()
+        setVehicle(0)
+        setSearchTerm("")
         break
 
       default:
@@ -98,9 +102,9 @@ export default function MapPage() {
   return (
     <div className='map-container'>
       <MapBox activeState={activeState} coordinates={coordinates} setCoordinates={setCoordinates} source={source} destination={destination} />
-      <div className='map-actions'>
-        <ActionBox vehicleIsLoading={vehicleIsLoading} activeState={activeState} options={options} vehicle={vehicle} setVehicle={setVehicle} searchTerm={searchTerm} setSearchTerm={setSearchTerm} onClickHandler={onClickHandler} loading={isLoading} source={source} destination={destination} />
-      </div>
+
+      <ActionBox vehicleIsLoading={vehicleIsLoading} activeState={activeState} options={options} vehicle={vehicle} setVehicle={setVehicle} searchTerm={searchTerm} setSearchTerm={setSearchTerm} onClickHandler={onClickHandler} loading={isLoading} source={source} destination={destination} />
+
     </div>
   )
 }

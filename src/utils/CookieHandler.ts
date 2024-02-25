@@ -1,4 +1,4 @@
-export default class CookieHandler {
+export default class cookieHandler {
 
     public static get(name: string): string | null {
       const cookies: string[] = document.cookie.split(';');

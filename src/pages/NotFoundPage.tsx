@@ -1,12 +1,10 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
-import '../styles/not-found.scss'
-type Props = {}
+import '../styles//pages/not-found.scss'
 
-export default function NotFoundPage({}: Props) {
+export default function NotFoundPage() {
   return (
     <div className='not-found'>
-      این صفحه وجود ندارد!
+      <p>این صفحه وجود ندارد!</p>
       <Link to={"/"}>رفتن به صفحه اصلی</Link>
     </div>
   )

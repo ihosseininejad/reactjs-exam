@@ -1,0 +1,34 @@
+@import '../variables';
+
+$loader-size: 16px;
+$loader-shadow-offset: 25px;
+$loader-unactive-color: #FFF;
+$loader-active-color: $primary-color ;
+
+.loader {
+  width: $loader-size;
+  height: $loader-size;
+  border-radius: 50%;
+  margin: 3px 1.5rem;
+  display: block;
+  position: relative;
+  background: #FFF;
+  box-shadow: -$loader-shadow-offset 0 $loader-unactive-color, $loader-shadow-offset 0 $loader-unactive-color;
+  box-sizing: border-box;
+  animation: shadowPulse 2s linear infinite;
+  
+  @keyframes shadowPulse {
+    33% {
+      background: $loader-unactive-color;
+      box-shadow: -$loader-shadow-offset 0 $primary-color, $loader-shadow-offset 0 $loader-unactive-color;
+    }
+    66% {
+      background: $primary-color;
+      box-shadow: -$loader-shadow-offset 0 $loader-unactive-color, $loader-shadow-offset 0 $loader-unactive-color;
+    }
+    100% {
+      background: $loader-unactive-color;
+      box-shadow: -$loader-shadow-offset 0 $loader-unactive-color, $loader-shadow-offset 0 $primary-color;
+    }
+  }
+}

@@ -1,10 +1,10 @@
-import { useContext, useEffect, useState, FormEvent } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import Button from '../form/Button'
 import { Input } from '../form/Input'
 
 import { AUTH_ROUTE } from '../../api/apiRoutes'
 import useFetch from '../../hooks/useFetch'
-import CookieHandler from '../../utils/CookieHandler'
+import cookieHandler from '../../utils/cookieHandler'
 
 import { ToastContext, ToastContextType } from '../../context/ToastContext'
 import { useNavigate } from 'react-router-dom'
@@ -13,6 +13,7 @@ import { IApiResponse } from '../../types/types'
 export default function AuthForm() {
     const [username, setUsername] = useState<string>('')
     const [password, setPassword] = useState<string>('')
+
     const { showToast } = useContext(ToastContext) as ToastContextType
     const navigate = useNavigate()
 
@@ -27,15 +28,21 @@ export default function AuthForm() {
     useEffect(() => {
         if (!isLoading && response) {
             if (response.status) {
-                CookieHandler.set('token', response.data.userToken)
-                showToast('success', 'یه خبر خوب!', response.message);
+                cookieHandler.set('token', response.data.userToken)
+                showToast({
+                    type: 'success', 
+                    title: 'یه خبر خوب!', 
+                    message: response.message});
                 navigate('/')
             } else {
-                showToast('error', 'میدونی چرا؟', response.message || "مشکلی از سمت سرور پیش آمده است!");
+                showToast({
+                    type: 'error', 
+                    title: 'برای اینکه!', 
+                    message: response.message || "مشکلی از سمت سرور پیش آمده است!"});
                 clearForm()
             }
-        } else if(!isLoading && error){
-            showToast('error', 'میدونی چرا؟', "مشکلی از سمت سرور پیش آمده است!");
+        } else if (!isLoading && error) {
+           showToast({type: 'error', title: 'میدونی چرا؟', message: "مشکلی از سمت سرور پیش آمده است!"});
         }
     }, [isLoading])
 
@@ -44,7 +51,7 @@ export default function AuthForm() {
         setPassword('')
     }
 
-    const authHandler = (e: FormEvent<HTMLFormElement>) => {
+    const authHandler = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         handlerApi()
     }
@@ -52,14 +59,33 @@ export default function AuthForm() {
     return (
         <>
             <form className="login">
-                <Input required type='text' label='نام کاربری' state={username} setState={setUsername} placeholder='نام کاربری پیشگامان آسیا' />
-                <Input required minLength={2} type='password' label='رمز عبور' state={password} setState={setPassword} placeholder='رمز عبور پیشگامان آسیا' />
+                <Input
+                    required
+                    type='text'
+                    label='نام کاربری'
+                    state={username}
+                    setState={setUsername}
+                    placeholder='نام کاربری پیشگامان آسیا'
+                />
 
-                <Button loading={isLoading} disabled={!username.length || password.length < 2} label='ورود به پیشگامان آسیا' onClick={authHandler} />
+                <Input
+                    required
+                    minLength={2}
+                    type='password'
+                    label='رمز عبور'
+                    state={password}
+                    setState={setPassword}
+                    placeholder='رمز عبور پیشگامان آسیا'
+                />
+
+                <Button
+                    variant='outlined'
+                    loading={isLoading}
+                    disabled={!username.length || password.length < 2}
+                    label='ورود به پیشگامان آسیا'
+                    onClick={authHandler}
+                />
             </form>
-            <div className="description">
-                <h3>پیشگامان آسیا</h3>
-            </div>
         </>
     )
 }

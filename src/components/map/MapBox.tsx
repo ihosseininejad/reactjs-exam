@@ -30,6 +30,8 @@ const MapBox: React.FC<{ source: LatLngExpression, destination: LatLngExpression
                 maxBounds={bounds}
                 scrollWheelZoom={true}
                 doubleClickZoom={true}
+                fadeAnimation
+                
             >
                 <TileLayer
                     url={MAP_ROUTE}

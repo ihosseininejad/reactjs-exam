@@ -1,0 +1,39 @@
+@import 'variables';
+@import 'scrollbar';
+
+@font-face {
+    font-family: "Yekanbakh";
+    src: url("../../public/assets/fonts/Yekanbakh.ttf");
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: $font-family, tahoma;
+}
+
+body {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    direction: rtl;
+    background: linear-gradient(to right, $gradient-color-1, $gradient-color-2, $gradient-color-3);
+    animation: gradient 12s ease infinite;
+    background-size: 400% 400%;
+    background-attachment: fixed;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 0%;
+    }
+
+    50% {
+        background-position: 100% 100%;
+    }
+
+    100% {
+        background-position: 0% 0%;
+    }
+}
