@@ -1,17 +1,9 @@
-import { forwardRef, HTMLProps, useState } from "react";
+import { forwardRef, useState } from "react";
 import useDidMountEffect from "../../hooks/useDidmountEffect";
+import { InputProps } from "../../types/components/form/input.types";
 import '../../styles/components/form/input.scss'
 
-interface InputProps extends HTMLProps<HTMLInputElement> {
-    state: any;
-    setState: React.Dispatch<React.SetStateAction<any>>;
-    label?: string;
-    required: boolean;
-    minLength?: number;
-    maxLength?: number
-}
-
-const Input = forwardRef<HTMLInputElement, InputProps>(({ state, setState, className, type, label, required, minLength, maxLength, ...props }, ref) => {
+const Input = forwardRef<HTMLInputElement, InputProps>(({ state, setState, className, type, label, required, minLength, maxLength, ...restProps }, ref) => {
     const [error, setError] = useState<string>('')
     const [isValid, setIsValid] = useState<boolean>(false)  
 
@@ -34,7 +26,6 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({ state, setState, class
 
     const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         if(maxLength && state.length > maxLength) return;
-
         setState(e.target?.value)
     }
 
@@ -52,12 +43,11 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({ state, setState, class
                     value={state}
                     ref={ref}
                     className={`input ${className}`}
-                    {...props} />
+                    {...restProps} />
             </div>
-            {!isValid && <div className="error">{error}</div>}
+            {!isValid && <p className="error">{error}</p>}
         </>
     );
 });
-Input.displayName = "Input";
 
-export { Input };
+export default Input;

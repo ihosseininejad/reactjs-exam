@@ -1,13 +1,7 @@
-import { useEffect, useState } from 'react';
+import { ToastProps } from '../../types/context/toastcontext.types';
 import '../../styles/components/modal.scss'
 
-interface ToastModalProps {
-    type: string;
-    title?: string;
-    message?: string;
-}
-
-const ToastModal: React.FC<ToastModalProps> = ({ type, title, message }) => {
+const ToastModal: React.FC<ToastProps> = ({ type, title, message }) => {
     
     return (
         <>

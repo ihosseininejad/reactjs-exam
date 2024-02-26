@@ -1,4 +1,4 @@
-import { IconProps } from "../types/types"
+import { IconProps } from "../types/icon.types"
 
 export const HomeMarker = ({ color, size, className } : IconProps) => {
     return (
@@ -13,6 +13,5 @@ export const DestinationMarker = ({ color, size, className } : IconProps) => {
         <svg className={className} width={size || "70"} height={size || "70"} viewBox="0 0 250 250" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M54.6875 208.333C54.6875 212.648 58.1853 216.146 62.5 216.146C66.8147 216.146 70.3125 212.648 70.3125 208.333L70.3125 125H173.929C184.236 125 188.283 111.633 179.708 105.916L158.834 92.0006C152.65 87.8775 152.65 78.7893 158.834 74.6662L179.707 60.7518C188.282 55.0349 184.235 41.6678 173.929 41.6678H70.3125C70.3125 37.3531 66.8147 33.8542 62.5 33.8542C58.1853 33.8542 54.6875 37.352 54.6875 41.6667V208.333Z" fill={color || "#54A139"}/>
         </svg>
-        
     )
 }

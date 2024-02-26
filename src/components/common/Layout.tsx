@@ -1,19 +1,24 @@
 import { useContext } from 'react'
-import { ToastContext, ToastContextType } from '../../context/ToastContext'
+import { ToastContext } from '../../context/ToastContext'
 import ToastModal from '../modals/ToastModal'
+import { ToastContextType } from '../../types/context/toastcontext.types'
+import { LayoutProps } from '../../types/components/common/layout.types'
 
-type Props = {
-    children: React.ReactNode
-}
-
-export default function Layout({ children }: Props) {
+export default function Layout({ children }: LayoutProps) {
     const { toast } = useContext(ToastContext) as ToastContextType
 
     return (
         <>
             {children}
 
-            {toast && <ToastModal type={toast?.type} title={toast.title} message={toast.message} />}
+            {
+                toast
+                && <ToastModal
+                    type={toast?.type}
+                    title={toast.title}
+                    message={toast.message}
+                />
+            }
         </>
     )
 }

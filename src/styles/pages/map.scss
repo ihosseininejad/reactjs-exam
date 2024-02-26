@@ -6,6 +6,11 @@
     justify-content: center;
     align-items: center;
 
+    .map-box{
+        width: 100vw;
+        height: 100vh;
+    }
+
     .leaflet-marker-pane img {
         margin-top: -22px !important;
     }

@@ -1,31 +1,34 @@
-import { ButtonHTMLAttributes, forwardRef, FC } from 'react';
+import { forwardRef, FC } from 'react';
 import Loader from '../common/Loader';
+import { ButtonProps } from '../../types/components/form/button.types';
 import '../../styles/components/form/button.scss'
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-    label?: string;
-    onClick: any;
-    disabled: boolean;
-    loading: boolean;
-    variant: 'outlined' | 'filled'
-}
+const Button: FC<ButtonProps> = forwardRef<HTMLButtonElement, ButtonProps>(({ onClick, label, disabled, loading, variant, ...restProps }, ref) => {
 
-
-const Button: FC<ButtonProps> = forwardRef<HTMLButtonElement, ButtonProps>(({ onClick, label, disabled, loading, variant, ...props }, ref) => {
+    const onClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+        if (disabled || loading) {
+            e.preventDefault()
+            return;
+        }
+        onClick(e);
+    }
 
     return (
-        <button ref={ref}
-            onClick={disabled || loading ? (e) => e.preventDefault() : onClick}
+        <button
+            ref={ref}
+            onClick={onClickHandler}
             className={`${variant} ${(disabled || loading) && "disabled"}`}
-            {...props}>
+            {...restProps}
+        >
             <span>
-                {loading
-                    ? <Loader />
-                    : label ? label : "بدون متن"}
+                {
+                    loading
+                        ? <Loader />
+                        : label ? label : "بدون متن"
+                }
             </span>
         </button>
     );
 });
-Button.displayName = "Button";
 
 export default Button;

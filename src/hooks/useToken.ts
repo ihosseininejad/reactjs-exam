@@ -1,6 +1,5 @@
 import cookieHandler from "../utils/cookieHandler";
-
-type Token = string | null;
+import { Token } from "../types/hooks/token.types";
 
 const useToken = (): Token => {
   return cookieHandler.get('token');

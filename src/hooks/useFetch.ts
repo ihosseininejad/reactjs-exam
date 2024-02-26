@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios, { AxiosRequestConfig } from 'axios';
-import { IApiResponse } from '../types/types';
+import { FetcherOptions, IApiResponse, Method, UseFetchResult } from '../types/hooks/usefetch.types';
 
 const HEADER_BASE: AxiosRequestConfig['headers'] = {
     "content-type": "application/json",
@@ -8,20 +8,11 @@ const HEADER_BASE: AxiosRequestConfig['headers'] = {
     "Accept": "application/json",
 };
 
-
-type Method = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PUT' | 'PATCH';
-
-type UseFetchResult<IApiResponse> = [IApiResponse | null, boolean, Error | null, () => Promise<void>];
-
 const useFetch = <IApiResponse>(
     method: Method,
-    { url, values, header, autoFetch }: { 
-        url: string; 
-        values?: any; 
-        header?: AxiosRequestConfig['headers']; 
-        autoFetch?: boolean
-    }
+    { url, values, header, autoFetch }: FetcherOptions
 ): UseFetchResult<IApiResponse> => {
+
     const base = (!header) ? HEADER_BASE : header;
     const [response, setResponse] = useState<IApiResponse | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -36,7 +27,7 @@ const useFetch = <IApiResponse>(
         url: url,
     };
 
-    const handlerApi = async () => {
+    const fetchHandler = async () => {
         setIsLoading(true);
         try {
             const response = await axios(options);
@@ -53,7 +44,7 @@ const useFetch = <IApiResponse>(
         options.cancelToken = source.token;
 
         if (url && autoFetch) {
-            handlerApi();
+            fetchHandler();
         }
 
         return () => {
@@ -61,7 +52,7 @@ const useFetch = <IApiResponse>(
         };
     }, [url]);
 
-    return [response, isLoading, error, handlerApi];
+    return [response, isLoading, error, fetchHandler];
 };
 
 export default useFetch;
