@@ -1,15 +1,14 @@
-import { useContext, useEffect, useState } from 'react'
-
-import useFetch from '../hooks/useFetch'
+import { useEffect, useState } from 'react'
+import { useStateProvider } from '../context/StateContext'
+import { defaultCoordinates, reducerCases } from '../utils/constants'
 import { ACCEPT_REQUEST_ROUTE } from '../api/apiRoutes'
+import { splitCoordinates } from '../utils/helperFunctions'
 import useToken from '../hooks/useToken'
-import { ToastContext } from '../context/ToastContext'
+import useFetch from '../hooks/useFetch'
 
 import MapBox from '../components/map/MapBox'
 import ActionBox from '../components/map/ActionBox'
-import { splitCoordinates } from '../utils/helperFunctions'
 
-import { ToastContextType } from '../types/context/toastcontext.types'
 import { IApiResponse } from '../types/hooks/usefetch.types'
 import { LatLngExpression } from 'leaflet'
 import '../styles/pages/map.scss'
@@ -21,12 +20,12 @@ export default function MapPage() {
   const [vehicle, setVehicle] = useState(0)
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [activeState, setActiveState] = useState(0)
-  const [coordinates, setCoordinates] = useState<[number, number]>([29.60860914023545, 52.531155865995615])
+  const [coordinates, setCoordinates] = useState<[number, number]>(defaultCoordinates)
 
-  const { showToast } = useContext(ToastContext) as ToastContextType
+  const [{ }, dispatch] = useStateProvider()
   const userToken = useToken()
 
-  const [response, isLoading, error, handlerApi] = useFetch<IApiResponse>("POST", {
+  const [response, isLoading, error, sendRequest] = useFetch<IApiResponse>("POST", {
     url: ACCEPT_REQUEST_ROUTE,
     values: {
       userToken,
@@ -40,26 +39,35 @@ export default function MapPage() {
   useEffect(() => {
     if (!isLoading && response) {
       if (response.status) {
-        showToast({
-          type: 'success',
-          title: 'یه خبر خوب!',
-          message: response.message + ` (${response.data?.requestNo})`
-        });
+        dispatch({
+          type: reducerCases.SHOW_TOAST,
+          payload: {
+            type: 'success',
+            title: 'یه خبر خوب!',
+            message: response.message + ` (${response.data?.requestNo})`
+          }
+        })
         clearForm()
       } else {
-        showToast({
-          type: 'error',
-          title: 'برای اینکه!',
-          message: response.message || "مشکلی از سمت سرور پیش آمده است!"
-        });
+        dispatch({
+          type: reducerCases.SHOW_TOAST,
+          payload: {
+            type: 'error',
+            title: 'برای اینکه!',
+            message: response.message || "مشکلی از سمت سرور پیش آمده است!"
+          }
+        })
         clearForm()
       }
     } else if (!isLoading && error) {
-      showToast({
-        type: 'error',
-        title: 'برای اینکه!',
-        message: "مشکلی از سمت سرور پیش آمده است!"
-      });
+      dispatch({
+        type: reducerCases.SHOW_TOAST,
+        payload: {
+          type: 'error',
+          title: 'برای اینکه!',
+          message: "مشکلی از سمت سرور پیش آمده است!"
+        }
+      })
     }
   }, [isLoading])
 
@@ -82,7 +90,7 @@ export default function MapPage() {
         break
 
       case 2:
-        handlerApi()
+        sendRequest()
         setVehicle(0)
         setSearchTerm("")
         break
@@ -102,7 +110,8 @@ export default function MapPage() {
         coordinates={coordinates}
         setCoordinates={setCoordinates}
         source={source}
-        destination={destination} />
+        destination={destination}
+      />
 
       <ActionBox
         activeState={activeState}
@@ -113,7 +122,8 @@ export default function MapPage() {
         onClickHandler={onClickHandler}
         loading={isLoading}
         source={source}
-        destination={destination} />
+        destination={destination}
+      />
 
     </div>
   )

@@ -1,18 +1,16 @@
-import { useContext } from 'react'
-import { ToastContext } from '../../context/ToastContext'
 import ToastModal from '../modals/ToastModal'
-import { ToastContextType } from '../../types/context/toastcontext.types'
 import { LayoutProps } from '../../types/components/common/layout.types'
+import { useStateProvider } from '../../context/StateContext'
 
 export default function Layout({ children }: LayoutProps) {
-    const { toast } = useContext(ToastContext) as ToastContextType
+    const [{ toast }] = useStateProvider()
 
     return (
         <>
             {children}
 
             {
-                toast
+                toast?.type
                 && <ToastModal
                     type={toast?.type}
                     title={toast.title}

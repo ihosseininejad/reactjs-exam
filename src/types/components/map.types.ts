@@ -1,5 +1,4 @@
 import { LatLngExpression } from "leaflet";
-import { Option } from "./form/autocomplete-types";
 
 export interface MapBoxProps {
     source: LatLngExpression;

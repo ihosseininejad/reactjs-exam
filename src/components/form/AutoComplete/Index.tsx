@@ -1,7 +1,8 @@
 import React, { useState, forwardRef } from 'react';
-import { AutoCompleteProps, Option } from '../../../types/components/form/autocomplete-types';
-import '../../../styles/components/form/auto-complete.scss'
+import { AutoCompleteProps } from '../../../types/components/form/autocomplete-types';
 import OptionBox from './OptionBox';
+import '../../../styles/components/form/auto-complete.scss'
+
 
 const AutoComplete: React.FC<AutoCompleteProps> = forwardRef<HTMLInputElement, AutoCompleteProps>(({ searchTerm, setSearchTerm, options, vehicle, setVehicle, loading, ...restProps }, ref) => {
 
@@ -28,7 +29,6 @@ const AutoComplete: React.FC<AutoCompleteProps> = forwardRef<HTMLInputElement, A
     setShowOptions(false);
   };
 
-  
 
   return (
     <div className='auto-complete'>

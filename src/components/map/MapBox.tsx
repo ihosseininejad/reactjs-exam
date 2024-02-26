@@ -3,17 +3,14 @@ import { MAP_ROUTE } from '../../api/apiRoutes';
 import LocationPicker from './LocationPicker';
 import { isZeroZero } from '../../utils/helperFunctions';
 import LeafletIcon from './Marker';
+import { MapBoxProps } from '../../types/components/map.types';
+import { boundsMap } from '../../utils/constants';
 
 import 'leaflet/dist/leaflet.css'
-import { LatLngBoundsExpression } from 'leaflet';
-import { MapBoxProps } from '../../types/components/map.types';
+
 
 const MapBox: React.FC<MapBoxProps> = ({ source, destination, coordinates, setCoordinates, activeState }) => {
 
-    const bounds: LatLngBoundsExpression = [
-        [25.078237, 44.034138], // Southwest
-        [39.781681, 63.317776] // Northeast
-    ];
 
     const SourceIcon = LeafletIcon("https://img.icons8.com/?size=256&id=12229&format=png")
 
@@ -26,7 +23,7 @@ const MapBox: React.FC<MapBoxProps> = ({ source, destination, coordinates, setCo
             zoom={12}
             minZoom={5}
             maxZoom={18}
-            maxBounds={bounds}
+            maxBounds={boundsMap}
             scrollWheelZoom={true}
             doubleClickZoom={true}
             fadeAnimation
@@ -47,7 +44,6 @@ const MapBox: React.FC<MapBoxProps> = ({ source, destination, coordinates, setCo
                 ></Marker>
             }
 
-            
             {
                 /* destination maker */
                 (activeState == 1 || !isZeroZero(destination))

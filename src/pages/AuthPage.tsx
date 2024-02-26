@@ -7,7 +7,6 @@ import BackgroundLayers from '../components/auth/BackgroundLayers'
 import Waves from '../components/auth/Waves'
 import '../styles/pages/auth.scss'
 
-
 export default function AuthPage() {
   const token = useToken()
   const navigate = useNavigate()

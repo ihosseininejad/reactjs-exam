@@ -1,8 +1,9 @@
 import { forwardRef, useState } from "react";
 import useDidMountEffect from "../../hooks/useDidmountEffect";
 import { InputProps } from "../../types/components/form/input.types";
-import '../../styles/components/form/input.scss'
 import { CloseEye, OpenEye } from "../../utils/iconPack";
+import '../../styles/components/form/input.scss'
+
 
 const Input = forwardRef<HTMLInputElement, InputProps>(({ state, setState, className, type, label, required, minLength, maxLength, ...restProps }, ref) => {
     const [error, setError] = useState<string>('')

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { AUTH_ROUTE } from '../../api/apiRoutes'
@@ -8,18 +8,18 @@ import cookieHandler from '../../utils/cookieHandler'
 import Button from '../form/Button'
 import Input from '../form/Input'
 
-import { ToastContext } from '../../context/ToastContext'
-import { ToastContextType } from '../../types/context/toastcontext.types'
 import { IApiResponse } from '../../types/hooks/usefetch.types'
+import { reducerCases } from '../../utils/constants'
+import { useStateProvider } from '../../context/StateContext'
 
 export default function AuthForm() {
     const [username, setUsername] = useState<string>('')
     const [password, setPassword] = useState<string>('')
 
-    const { showToast } = useContext(ToastContext) as ToastContextType
+    const [{ }, dispatch] = useStateProvider()
     const navigate = useNavigate()
 
-    const [response, isLoading, error, handlerApi] = useFetch<IApiResponse>("POST", {
+    const [response, isLoading, error, sendCredentials] = useFetch<IApiResponse>("POST", {
         url: AUTH_ROUTE,
         values: {
             username,
@@ -31,26 +31,35 @@ export default function AuthForm() {
         if (!isLoading && response) {
             if (response.status) {
                 cookieHandler.set('token', response.data.userToken)
-                showToast({
-                    type: 'success',
-                    title: 'یه خبر خوب!',
-                    message: response.message
-                });
+                dispatch({
+                    type: reducerCases.SHOW_TOAST,
+                    payload: {
+                        type: 'success',
+                        title: 'یه خبر خوب!',
+                        message: response.message
+                    }
+                })
                 navigate('/')
             } else {
-                showToast({
-                    type: 'error',
-                    title: 'برای اینکه!',
-                    message: response.message || "مشکلی از سمت سرور پیش آمده است!"
-                });
+                dispatch({
+                    type: reducerCases.SHOW_TOAST,
+                    payload: {
+                        type: 'error',
+                        title: 'برای اینکه!',
+                        message: response.message || "مشکلی از سمت سرور پیش آمده است!"
+                    }
+                })
                 clearForm()
             }
         } else if (!isLoading && error) {
-            showToast({
-                type: 'error',
-                title: 'میدونی چرا؟',
-                message: "مشکلی از سمت سرور پیش آمده است!"
-            });
+            dispatch({
+                type: reducerCases.SHOW_TOAST,
+                payload: {
+                    type: 'error',
+                    title: 'برای اینکه!',
+                    message: "مشکلی از سمت سرور پیش آمده است!"
+                }
+            })
         }
     }, [isLoading])
 
@@ -61,7 +70,7 @@ export default function AuthForm() {
 
     const authHandler = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        handlerApi()
+        sendCredentials()
     }
 
     return (

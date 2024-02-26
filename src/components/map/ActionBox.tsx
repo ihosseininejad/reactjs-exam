@@ -1,16 +1,15 @@
-import { useContext, useEffect, useState } from 'react';
-import useToken from '../../hooks/useToken';
+import { useEffect, useState } from 'react';
+import { useStateProvider } from '../../context/StateContext';
+import { reducerCases } from '../../utils/constants';
 import { getTextByActiveState } from '../../utils/helperFunctions';
+import useToken from '../../hooks/useToken';
+import useFetch from '../../hooks/useFetch';
+import { SEARCH_VEHICLE } from '../../api/apiRoutes';
 
 import AutoComplete from '../form/AutoComplete/Index'
 import Button from '../form/Button'
 import MarkerDetails from './MarkerDetails';
 
-import useFetch from '../../hooks/useFetch';
-import { SEARCH_VEHICLE } from '../../api/apiRoutes';
-import { ToastContext } from '../../context/ToastContext';
-
-import { ToastContextType } from '../../types/context/toastcontext.types';
 import { Option } from '../../types/components/form/autocomplete-types';
 import { ActionBoxProps } from '../../types/components/map.types';
 import { IApiResponse } from '../../types/hooks/usefetch.types';
@@ -20,7 +19,7 @@ import '../../styles/components/action-box.scss'
 export default function ActionBox({ activeState, searchTerm, setSearchTerm, vehicle, setVehicle, onClickHandler, loading, source, destination }: ActionBoxProps) {
     const [urlState, setUrlState] = useState('')
     const [options, setOptions] = useState<Option[]>([]);
-    const { showToast } = useContext(ToastContext) as ToastContextType
+    const [{ }, dispatch] = useStateProvider()
 
     const userToken = useToken()
 
@@ -41,11 +40,14 @@ export default function ActionBox({ activeState, searchTerm, setSearchTerm, vehi
                 setOptions(vehicleResponse.data)
             }
         } else if (!isLoading && error) {
-            showToast({
-                type: 'error',
-                title: 'برای اینکه!',
-                message: "مشکلی از سمت سرور پیش آمده است!"
-            });
+            dispatch({
+                type: reducerCases.SHOW_TOAST,
+                payload: {
+                    type: 'error',
+                    title: 'برای اینکه!',
+                    message: "مشکلی از سمت سرور پیش آمده است!"
+                }
+            })
         }
     }, [isLoading])
 
