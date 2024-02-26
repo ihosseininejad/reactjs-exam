@@ -84,6 +84,7 @@ export default function AuthForm() {
                     state={password}
                     setState={setPassword}
                     placeholder='رمز عبور پیشگامان آسیا'
+                    className='pl-12'
                 />
 
                 <Button

@@ -6,6 +6,13 @@
 .field {
     padding: 0px 0px 20px 0px;
     position: relative;
+    .eye-icon{
+        position: absolute;
+        left: 4rem;
+        top: 40%;
+        transform: translateY(-50%);
+        cursor: pointer;
+    }
 }
 
 .input {
@@ -13,7 +20,6 @@
     border-bottom: 2px solid #D1D1D4;
     background: none;
     padding: 10px;
-    padding-left: 24px;
     font-weight: 700;
     width: 75%;
     transition: .2s;
